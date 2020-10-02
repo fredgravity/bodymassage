@@ -1,0 +1,33 @@
+//ALL SCSS AND CSS FOR WEBPACK COMPILATION WILL COME HERE
+
+//font
+//@import url(https://fonts.googleapis.com/css?family=Railway:300,400,600);
+//@import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Spartan&display=swap');
+
+// use ~ for npm import
+@import "~foundation-sites/assets/foundation";
+
+@import "~animate.css/animate.min.css";
+
+@import "~flatpickr/dist/flatpickr.min.css";
+
+@import "~motion-ui/src/motion-ui";
+
+@import "~slick-carousel/slick/slick";
+
+@import "~slick-carousel/slick/slick-theme";
+
+@import "~jquery-confirm/dist/jquery-confirm.min.css";
+
+@include motion-ui-transitions;
+@include motion-ui-animations;
+
+@import "admin/_nav";
+@import "layout/_nav";
+@import "_global";
+@import "layout/_home";
+@import "layout/_animate";
+@import "layout/_about";
+@import "layout/_card";
+

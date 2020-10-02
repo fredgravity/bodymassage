@@ -1,0 +1,61 @@
+.admin-nav{
+
+  background-color: #151515;
+
+  .menu > li > a{
+    color: #f1f1f1;
+    font-size: 1.2rem;
+
+
+    &:hover, &:focus, &:active{
+     background-color: darken(#151515, 80);
+      padding-left:2.5rem ;
+    }
+
+  }
+
+
+  h3{
+    color: #f1f1f1;
+    font-size: 1.5rem;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  p{
+    color: #f1f1f1;
+    font-size: 1rem;
+
+  }
+
+  .image-holder{
+    padding: 0.7rem;
+    //background-color: #5e5e5e;
+
+    img{
+      border-radius: 50%;
+      border: 3px solid darken(#5e5e5e, 15%);
+    }
+
+  }
+
+
+
+}
+
+
+.admin-title-bar{
+
+  background-color: #151515;
+  .title-bar{
+
+
+    .title-bar-title{
+      font-size: 1.5rem;
+      color: #f1f1f1;
+    }
+
+  }
+
+
+}

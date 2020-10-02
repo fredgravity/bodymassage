@@ -1,0 +1,61 @@
+
+//@include mui-series {
+////  .shake{ @include mui-queue(2s, 0s, shake());}
+////  .spin{ @include mui-queue(1s, 2s, spin());}
+////  .wiggle{ @include mui-queue(wiggle);}
+////  //.fade{ @include mui-queue(fade(left,right ));}
+////}
+////
+////.spin-cw{
+////  @include mui-animation(spin(in, 360deg));
+////}
+
+.home{
+
+  #anim{
+    position: fixed;
+    top: 30%;
+    left: 60%;
+    font-family: 'Spartan', sans-serif;
+    color: #5d5fff;
+
+    @include breakpoint(small only) {
+      position: fixed;
+      top: 20%;
+      left: 30%;
+      font-family: 'Spartan', sans-serif;
+      color: #5d5fff;
+      font-size: 2rem;
+    }
+  };
+
+  #anim2{
+    position: fixed;
+    top: 50%;
+    left: 60%;
+    font-family: 'Spartan', sans-serif;
+    color: #5d5fff;
+
+    @include breakpoint(small only) {
+      position: fixed;
+      top: 35%;
+      left: 40%;
+      font-family: 'Spartan', sans-serif;
+      color: #5d5fff;
+      font-size: 2rem;
+    }
+  }
+}
+
+#anim3{
+  position: fixed;
+  top: 80%;
+  left: 35%;
+  width: 30%;
+  border-radius: 10px;
+
+  @include breakpoint(small only){
+    left:25%;
+    width: 50%;
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "author": "Gravity",
+  "description": "massage project",
+  "name": "bodymassage",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "npm run development",
+    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "npm run development -- --watch",
+    "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "prod": "npm run production",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+  },
+  "dependencies": {
+    "animate.css": "^4.1.0",
+    "axios": "^0.19.2",
+    "chart.js": "^2.9.3",
+    "cross-env": "^7.0.2",
+    "flatpickr": "^4.6.3",
+    "foundation-sites": "^6.6.3",
+    "gulp": "^4.0.2",
+    "jquery": "^3.5",
+    "jquery-confirm": "^3.3.4",
+    "laravel-mix": "^5.0.4",
+    "motion-ui": "^2.0.3",
+    "slick-carousel": "^1.8.1",
+    "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "resolve-url-loader": "^3.1.1",
+    "sass": "^1.26.5",
+    "sass-loader": "^8.0.2",
+    "vue-template-compiler": "^2.6.11"
+  }
+}
