@@ -2,7 +2,33 @@
 ARTISAO.home.bookings = function () {
     'use strict';
 
+
     $(document).ready(function () {
+        //set session warning to login
+        let session = $('.bookings').attr('data-isSession');
+        // alert(session);
+
+        if (session != true){
+            setTimeout(function () {
+                $.dialog({
+                    title: 'No User Authenticated!',
+                    content: 'We found no user authenticated. You will be redirected if you try to book without an Acounnt. Please Login to Book a massage.',
+                    useBootstrap:false,
+                    containerFluid:false,
+                    boxWidth:'50%',
+                    type: 'red'
+                });
+            },1000);
+        }
+
+        // change map when city is changed
+        $('#city').change(function () {
+           let city =  $('#city').val();
+           // alert (city);
+           $('#bookingMap').attr('src', "https://www.google.com/maps/embed/v1/place?key=AIzaSyDshX8fE38Qzt03yRhE34i_Hh57tSCIkdk&q="+city+",Greater+Accra+Ghana");
+        });
+
+        // disable todays date for booking
         let today = new Date();
         let dd = String(today.getDate()).padStart(2, '0');
         let mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -50,6 +76,7 @@ ARTISAO.home.bookings = function () {
         $('#checkout-btn').on('click', function (e) {
             e.preventDefault();
             // alert('hi');
+            $('.load-spinner').show();
 
             let massageTypeId = $('#massageType').val();
             let massageHours = $('#hourSession').val();
@@ -98,6 +125,7 @@ ARTISAO.home.bookings = function () {
                     boxWidth:'50%',
                     type: 'red'
                 });
+                $('.load-spinner').hide();
                 return
             }
 
@@ -130,7 +158,23 @@ ARTISAO.home.bookings = function () {
                         type: 'red'
                     });
                     $('.cart-icon').show();
+                    $('.load-spinner').hide();
                 }
+
+
+                if (res.data.redirectNotAccra){
+                    $.dialog({
+                        title: 'Problem with Location!',
+                        content: 'You location is outside of Greater Accra Region of Ghana. Only users in this location can book for a massage. ',
+                        useBootstrap:false,
+                        containerFluid:false,
+                        boxWidth:'50%',
+                        type: 'red'
+                    });
+                    $('.cart-icon').show();
+                    $('.load-spinner').hide();
+                }
+
 
                 if (res.data.redirectAdded){
                     $.dialog({
@@ -143,6 +187,7 @@ ARTISAO.home.bookings = function () {
                     });
                     // console.log(res.data);
                     $('.cart-icon-span').text('('+res.data.count+')');
+                    $('.load-spinner').hide();
                 }
 
                 if (res.data.redirectDateMax){
@@ -155,6 +200,7 @@ ARTISAO.home.bookings = function () {
                         type: 'red'
                     });
                     $('.cart-icon').show();
+                    $('.load-spinner').hide();
                 }
 
                 if (res.data.redirectProfile){
@@ -167,6 +213,7 @@ ARTISAO.home.bookings = function () {
                         type: 'red'
                     });
                     $('.cart-icon').show();
+                    $('.load-spinner').hide();
                 }
 
                 // console.log(res.data);

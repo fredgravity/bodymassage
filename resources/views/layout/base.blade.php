@@ -28,6 +28,7 @@
 <script src="/fontawesome/js/allfonts.js"></script>
 <script src="/js/all.js">
     $(document).foundation();
+
 </script>
 </body>
 </html>

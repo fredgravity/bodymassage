@@ -46,6 +46,24 @@ function make($fileName, $data){
 }
 
 
+function get_ip(){
+    $ip = '';
+    if (isset($_SERVER['HTTP_CLIENT_IP'])){
+//        pnd('hi');
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+    }elseif(isset($_SERVER['HTTP_X_FORWARDED_FOR'])){
+//        pnd('hi2');
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    }else{
+//        pnd($_SERVER['HTTP_X_FORWARDED_FOR']);
+        $ip = (isset($_SERVER['REMOTE_ADDR'])? $_SERVER['REMOTE_ADDR'] : '' );
+    }
+
+    return $ip;
+}
+
+
+
 function encrypt3Des($data, $key){
 
     $encData = openssl_encrypt($data, 'DES-EDE3', $key, OPENSSL_RAW_DATA);

@@ -28,6 +28,7 @@
 <script src="/fontawesome/js/allfonts.js"></script>
 <script src="/js/all.js">
     $(document).foundation();
+
 </script>
 </body>
 </html><?php /**PATH C:\xampp7.2\htdocs\bodymassage\resources\views/layout/base.blade.php ENDPATH**/ ?>

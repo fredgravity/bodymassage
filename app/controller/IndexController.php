@@ -10,6 +10,7 @@ namespace App\Controller;
 
 
 use App\classes\Cart;
+use App\classes\LocationData;
 use App\Classes\Mail;
 use App\classes\MailWithGun;
 use App\Classes\Redirect;
@@ -17,7 +18,6 @@ use App\Classes\Session;
 use App\Classes\ValidateRequest;
 use App\Classes\Request;
 use App\Classes\CSRFToken;
-
 use App\Models\District;
 use App\Models\OrderDetail;
 use App\Models\Product;
@@ -302,6 +302,11 @@ class IndexController extends BaseController
                             exit();
                         }
 
+                        //check whether user is booking from accra region
+                        if (LocationData::getLocation('regionName') !== 'Greater Accra Region'){
+                            echo json_encode(['redirectNotAccra' => true]);
+                            exit();
+                        }
 
 
                         if (Session::exist('user_cart')){

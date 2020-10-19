@@ -112,7 +112,7 @@ $router->map('GET', '/profile/[a:user]/payments/graph', 'App\Controller\Admin\Pa
 //Authentication
 $router->map('GET', '/login', 'App\Controller\AuthController@showLoginForm','login_users_form');
 $router->map('POST', '/login', 'App\Controller\AuthController@login','login_users');
-$router->map('GET', '/register', 'App\Controller\AuthController@registerForm','register_users_form');
+$router->map('GET', '/register', 'App\Controller\AuthController@showRegisterForm','register_users_form');
 $router->map('POST', '/register', 'App\Controller\AuthController@register','register_users');
 $router->map('GET', '/logout', 'App\Controller\AuthController@logout','logout_users');
 

@@ -48,7 +48,7 @@
 
 
 
-                        @if(user())
+                        @if(user() && user()->role == 'admin')
 
                             <label for="address">Address:</label>
                             <input type="text" id="address" name="address" value="{{ \App\Classes\Request::oldData('post', 'address') }}">

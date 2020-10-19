@@ -4,7 +4,7 @@
 
 <?php $__env->startSection('content'); ?>
 
-    <section class="bookings" id="bookings">
+    <section class="bookings" id="bookings" data-isSession="<?php echo e(isAuthenticated()); ?>">
         <?php echo $__env->make('includes.messages', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="grid-x grid-padding-x">
 
@@ -13,10 +13,12 @@
             <div class="small-12 medium-8 cell" style="margin-top: 1rem;">
 
                 <iframe
+                        id="bookingMap"
                         width="100%"
                         height="100%"
                         frameborder="0" style="border:0"
                         src="https://www.google.com/maps/embed/v1/place?key=<?php echo e(getenv('GEO_API_KEY2')); ?>&q=<?php echo e($user); ?>,Greater+Accra+Ghana" allowfullscreen>
+                        
                 </iframe>
 
 
@@ -26,7 +28,7 @@
 
             <div class="small-12 medium-4 cell">
 
-                <div class="grid-padding-x grid-x flatpickr">
+                <div class="grid-padding-x grid-x flatpickr" >
                     <div class="small-10 medium-10 cell">
                         <label for="selectDate">* Select Date:</label>
                         <input type="text" placeholder="Select Date.."  data-input id="selectDate">
@@ -66,7 +68,7 @@
                         </div>
 
                         <div class="city medium-4 small-12 cell">
-                            <label for="city">City:</label>
+                            <label for="city">City/Community:</label>
                             <input type="text" name="city"  id="city" value="<?php echo e(user()->city); ?>">
 
                         </div>
@@ -79,8 +81,8 @@
                     <div class="time-session medium-6 small-12 cell">
                         <label for="timeSession">* Session Time:</label>
                         <select name="time_session" id="timeSession">
-                            <option value="first">8am - 10pm</option>
-                            <option value="second">11pm - 1pm</option>
+                            <option value="first">8am - 10am</option>
+                            <option value="second">11am - 1pm</option>
                             <option value="third">2pm - 4pm</option>
                         </select>
 
@@ -171,7 +173,7 @@
                 <div class="grid-x grid-padding-x">
 
                     <div class="medium-10 small-12 cell" style="display: none; padding-top: 1rem;" id="checkout-btn" >
-                        <input type="button" id="checkout-btn-click" value="Add to Cart!" class="button warning expanded animate__animated animate__bounceInUp animate__delay-1s">
+                        <button id="checkout-btn-click" value="Add to Cart!" class="button warning expanded animate__animated animate__bounceInUp animate__delay-1s">Add To Cart <?php echo $__env->make('includes.spinner', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?></button>
 
                     </div>
 

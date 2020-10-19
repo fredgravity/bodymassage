@@ -18,7 +18,7 @@ class User extends Model
     use SoftDeletes;
 
     public $timestamp = true;
-    protected $fillable = ['username', 'fullname', 'password', 'region', 'city', 'phone', 'address', 'email', 'image_path', 'role', 'gps', 'id_type', 'id_number', 'district'];
+    protected $fillable = ['username', 'fullname', 'password','country', 'region', 'city', 'phone', 'address', 'email', 'image_path', 'role', 'gps', 'id_type', 'id_number', 'district'];
     protected $dates = ['deleted_at'];
 
     public function worker(){
@@ -48,6 +48,7 @@ class User extends Model
                 'fullname'     => $field->fullname,
                 'email'        => $field->email,
                 'phone'        => $field->phone,
+                'country'      => $field->country,
                 'region'       => $field->region,
                 'city'         => $field->city,
                 'address'      => $field->address,

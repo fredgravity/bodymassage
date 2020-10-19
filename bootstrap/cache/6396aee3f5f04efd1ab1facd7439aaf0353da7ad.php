@@ -47,7 +47,7 @@
 
 
 
-                        <?php if(user()): ?>
+                        <?php if(user() && user()->role == 'admin'): ?>
 
                             <label for="address">Address:</label>
                             <input type="text" id="address" name="address" value="<?php echo e(\App\Classes\Request::oldData('post', 'address')); ?>">

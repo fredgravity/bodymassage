@@ -7,6 +7,8 @@
 
 <section class="home" id="home">
 
+    {{--{{ \App\classes\LocationData::getLocation('regionName')}}--}}
+
     <h1 class="  animate__animated animate__fadeInLeft animate__delay-1s" id="anim" >
         Feeling really stressed?
     </h1>

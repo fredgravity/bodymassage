@@ -7,6 +7,7 @@
  */
 
 namespace App\controller;
+use App\classes\LocationData;
 use App\Classes\Mail;
 use App\Classes\Request;
 use App\Classes\CSRFToken;
@@ -30,7 +31,7 @@ class AuthController extends BaseController
                 $this->userAuthenticated();
             }
 
-
+//pnd(\user()->role);
 
         $page_name = '';
         $uri = $_SERVER['REQUEST_URI'];
@@ -39,12 +40,20 @@ class AuthController extends BaseController
 
             if (isset(user()->role) === 'admin'){
                 return view('admin/register', compact('page_name'));
+
             }
+            return false;
 
+    }
 
-
+    public function showRegisterForm(){
+        if (isAuthenticated()){
+            Redirect::to('/');
+        }
+//        pnd(LocationData::get_visitor_data()->country);
         return view('auth/register', compact('page_name'));
     }
+
 
     public function register(){
 
@@ -144,64 +153,73 @@ class AuthController extends BaseController
                 }
 //                dnd(AuthController::verifyPassword($requests->password, $requests->confirmPassword));
 
-                if(AuthController::verifyPassword($requests->password, $requests->confirmPassword)){
-                  // create user in db
-                    $this->password = $requests->password;
+                if (LocationData::getLocation('country') === 'Ghana'){
+                    if(AuthController::verifyPassword($requests->password, $requests->confirmPassword)){
+                        // create user in db
+                        $this->password = $requests->password;
 
-                    if (isset(user()->role) === 'admin' || user()){
-                        //send this password to user for entry
+                        if (isset(user()->role) === 'admin' || user()){
+                            //send this password to user for entry
 
 
-                        //INSERT INTO DB
-                        AuthController::completeUser(
-                            $requests->username,
-                            $requests->email,
-                            $this->password,
-                            $requests->fullname,
-                            $requests->role,
-                            $requests->city,
-                            $requests->region,
-                            $requests->address,
-                            $requests->phone,
-                            $this->imagePath
+                            //INSERT INTO DB
+                            AuthController::completeUser(
+                                $requests->username,
+                                $requests->email,
+                                $this->password,
+                                $requests->fullname,
+                                $requests->role,
+                                $requests->city,
+                                $requests->region,
+                                $requests->address,
+                                $requests->phone,
+                                $this->imagePath
                             );
 
-                        // send password to registered user
+                            // send password to registered user
 //                        AuthController::sendPassword($requests->username,$requests->fullname, $requests->email, $this->password);
 
-                        Request::refresh();
-                        $success = $requests->username. ', has been registered successfully!';
+                            Request::refresh();
+                            $success = $requests->username. ', has been registered successfully!';
 
-                        view('admin/register', compact('success'));
+                            view('admin/register', compact('success'));
+
+                        }else{
+
+                            AuthController::createUser(
+                                $requests->username,
+                                $requests->email,
+                                $requests->phone,
+                                $this->password,
+                                $requests->fullname
+                            );
+
+                            Session::flash('success', $requests->username. ', has been registered successfully!');
+                            Redirect::to('/');
+                        }
+
 
                     }else{
+                        $errors = 'Passwords do not match!';
+                        if (isset(user()->role) === 'admin'){
+                            return view('admin/register', [
+                                'errors' => $errors,
 
-                        AuthController::createUser(
-                            $requests->username,
-                            $requests->email,
-                            $requests->phone,
-                            $this->password,
-                            $requests->fullname
-                        );
-
-                        Session::flash('success', $requests->username. ', has been registered successfully!');
-                        Redirect::to('/');
-                    }
-
-
-                }else{
-                    $errors = 'Passwords do not match!';
-                    if (isset(user()->role) === 'admin'){
-                        return view('admin/register', [
+                            ]);
+                        }
+                        return view('auth/register', [
                             'errors' => $errors,
 
                         ]);
-                    }
-                    return view('auth/register', [
-                        'errors' => $errors,
+                    };
+                }else{
 
-                    ]);
-                };
+                    Session::flash('error', 'This service is only available in Greater Accra Region Of Ghana');
+                    Redirect::to('register');
+
+                }
+
+
 
             }else{
                 $env = getenv('APP_ENV');
@@ -333,6 +351,8 @@ class AuthController extends BaseController
             'password' => password_hash($password, PASSWORD_BCRYPT),
             'fullname' => $fullname,
             'role' => $role,
+            'country' => LocationData::getLocation('country'),
+            'region' => LocationData::getLocation('regionName')
         ]);
 
         $user = User::where('username', $username)->first();
@@ -384,8 +404,9 @@ class AuthController extends BaseController
             'email' => $email,
             'password' => password_hash($password, PASSWORD_BCRYPT),
             'fullname' => $fullname,
+            'country' => LocationData::getLocation('country'),
             'city' => $city,
-            'region' => $region,
+            'region' => LocationData::getLocation('regionName'),
             'address' => $address,
             'role' => $role,
             'phone' => $phone,

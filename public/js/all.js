@@ -49001,7 +49001,50 @@ $(document).ready(function () {
 ARTISAO.home.animate = function () {
   'use strict';
 
-  $(document).ready(function () {//     $('#anim').click(function () {
+  $(document).ready(function () {// let latitude ='';
+    // let longitude = '';
+    //
+    //
+    // function showLocation(position) {
+    //      latitude = position.coords.latitude;
+    //      longitude = position.coords.longitude;
+    //     alert("Latitude : " + latitude + " Longitude: " + longitude);
+    // }
+    //
+    //
+    //
+    // function getLocation() {
+    //
+    //     if(navigator.geolocation) {
+    //
+    //         // timeout at 60000 milliseconds (60 seconds)
+    //         let options = {timeout:300};
+    //         navigator.geolocation.getCurrentPosition(showLocation, errorHandler, options);
+    //     } else {
+    //         alert("Sorry, browser does not support geolocation!");
+    //     }
+    // }
+    //
+    // function errorHandler(error) {
+    //     console.log(error);
+    //     switch(error.code) {
+    //         case error.PERMISSION_DENIED:
+    //             alert( "User denied the request for Geolocation.");
+    //             break;
+    //         case error.POSITION_UNAVAILABLE:
+    //             alert("Location information is unavailable.");
+    //             break;
+    //         case error.TIMEOUT:
+    //             alert("The request to get user location timed out.");
+    //             break;
+    //         case error.UNKNOWN_ERROR:
+    //             alert("An unknown error occurred.");
+    //             break;
+    //     }
+    // }
+    //
+    // getLocation();
+    //     $('#anim').click(function () {
     //         $.dialog({
     //             title: 'Text content!',
     //             content: 'Simple modal!',
@@ -49055,6 +49098,29 @@ ARTISAO.home.bookings = function () {
   'use strict';
 
   $(document).ready(function () {
+    //set session warning to login
+    var session = $('.bookings').attr('data-isSession'); // alert(session);
+
+    if (session != true) {
+      setTimeout(function () {
+        $.dialog({
+          title: 'No User Authenticated!',
+          content: 'We found no user authenticated. You will be redirected if you try to book without an Acounnt. Please Login to Book a massage.',
+          useBootstrap: false,
+          containerFluid: false,
+          boxWidth: '50%',
+          type: 'red'
+        });
+      }, 1000);
+    } // change map when city is changed
+
+
+    $('#city').change(function () {
+      var city = $('#city').val(); // alert (city);
+
+      $('#bookingMap').attr('src', "https://www.google.com/maps/embed/v1/place?key=AIzaSyDshX8fE38Qzt03yRhE34i_Hh57tSCIkdk&q=" + city + ",Greater+Accra+Ghana");
+    }); // disable todays date for booking
+
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -49096,6 +49162,7 @@ ARTISAO.home.bookings = function () {
     $('#checkout-btn').on('click', function (e) {
       e.preventDefault(); // alert('hi');
 
+      $('.load-spinner').show();
       var massageTypeId = $('#massageType').val();
       var massageHours = $('#hourSession').val();
       var massageTime = $('#timeSession').val();
@@ -49140,6 +49207,7 @@ ARTISAO.home.bookings = function () {
           boxWidth: '50%',
           type: 'red'
         });
+        $('.load-spinner').hide();
         return;
       }
 
@@ -49168,6 +49236,20 @@ ARTISAO.home.bookings = function () {
             type: 'red'
           });
           $('.cart-icon').show();
+          $('.load-spinner').hide();
+        }
+
+        if (res.data.redirectNotAccra) {
+          $.dialog({
+            title: 'Problem with Location!',
+            content: 'You location is outside of Greater Accra Region of Ghana. Only users in this location can book for a massage. ',
+            useBootstrap: false,
+            containerFluid: false,
+            boxWidth: '50%',
+            type: 'red'
+          });
+          $('.cart-icon').show();
+          $('.load-spinner').hide();
         }
 
         if (res.data.redirectAdded) {
@@ -49181,6 +49263,7 @@ ARTISAO.home.bookings = function () {
           }); // console.log(res.data);
 
           $('.cart-icon-span').text('(' + res.data.count + ')');
+          $('.load-spinner').hide();
         }
 
         if (res.data.redirectDateMax) {
@@ -49193,6 +49276,7 @@ ARTISAO.home.bookings = function () {
             type: 'red'
           });
           $('.cart-icon').show();
+          $('.load-spinner').hide();
         }
 
         if (res.data.redirectProfile) {
@@ -49205,6 +49289,7 @@ ARTISAO.home.bookings = function () {
             type: 'red'
           });
           $('.cart-icon').show();
+          $('.load-spinner').hide();
         } // console.log(res.data);
 
       })["catch"](function (err) {
