@@ -12,7 +12,8 @@
             @include('includes.spinner')
         </div>
         @if($item)
-            <h3>{{ $item }}</h3>
+            {{--<h3>{{ $item }}</h3>--}}
+            <img src="/images/empty-cart.png" alt="empty_cart" style="width: 100%; height: 500px; ">
         @else
 {{--{{ pnd($cart) }}--}}
             @foreach($cart['results'] as $result)

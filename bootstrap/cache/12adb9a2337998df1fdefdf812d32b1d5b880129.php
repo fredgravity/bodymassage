@@ -10,22 +10,75 @@
 
             <div class="grid-padding-x grid-x">
 
-                <div class="small-12 cell animate__animated animate__slideInRight" id="aboutp">
-                    <h2 id="abouth1">About Us</h2>
-                    <p class="text-justify">
-                        Artisao Technologies is a software and technology hub pursuing technological innovation in Africa. We are of African origin registered under Ghana’s Business Names Act 1962 (Act 151).
-                    </p>
-                    <p>
-                        We seek to create technological platforms by which people of SKILL use their dexterity in promoting commerce, industry, culture, health and general wellbeing; for which reason we bring you masartgh.com, our online massage booking service.
-                    </p>
+                <div class="small-12 cell animate__animated animate__slideInRight" id="about">
+                    <div class="grid-x grid-padding-x ">
 
-                    <p>
-                        MASARTGH <sup>SM</sup> is a brand established in 2020 to bridge the gap between the massage industry and client availability. The service makes it easier for individuals and corporations to enjoy massage services anywhere at their convenience and with a touch of luxury. All it takes is to go to our online platform and book for the service, stating your availability, anywhere you are and at your convenience.
-                    </p>
+                        <div class="small-12 medium-6 cell">
+                            <h2 id="abouth1">About Us</h2>
+                            <p class="text-justify">
+                                Artisao Technologies is a software and technology hub pursuing technological innovation in Africa. We are of African origin registered under Ghana’s Business Names Act 1962 (Act 151).
+                            </p>
+                            <p>
+                                We seek to create technological platforms by which people of SKILL use their dexterity in promoting commerce, industry, culture, health and general wellbeing; for which reason we bring you masartgh.com, our online massage booking service.
+                            </p>
 
-                    <p>
-                        MASARTGH.COM is powered by Artisao Technologies.
-                    </p>
+                            <p>
+                                MASARTGH <sup>SM</sup> is a brand established in 2020 to bridge the gap between the massage industry and client availability. The service makes it easier for individuals and corporations to enjoy massage services anywhere at their convenience and with a touch of luxury. All it takes is to go to our online platform and book for the service, stating your availability, anywhere you are and at your convenience.
+                            </p>
+
+                            <p>
+                                MASARTGH.COM is powered by Artisao Technologies.
+                            </p>
+                        </div>
+
+                        <div class="medium-3 cell small-12" style="margin-top: 1rem;">
+                            <div class="card">
+                                <div class="card-divider">
+                                    <div class="grid-x cell text-center">
+                                        <p>Co-Founder Technologies</p>
+                                    </div>
+                                </div>
+                                <div class="grid-padding-x grid-x">
+                                    <div class=" cell" >
+                                        <img src="/images/aboutUsPic/fred_amoah_profile_pic.jpg" alt="frederick-amoah-sekyi" style="width: 100%; height: 400px;">
+                                    </div>
+                                </div>
+                                <div class="card-section">
+
+                                    <div class="text-center">
+                                        <p>Frederick Amoah-Sekyi</p>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class=" medium-3 cell small-12" style="margin-top: 1rem;">
+                            <div class="card">
+                                <div class="card-divider">
+                                    <div class="grid-x cell text-center">
+                                        <p>Co-Founder Business Dev.</p>
+                                    </div>
+                                </div>
+                                <div class="grid-padding-x grid-x">
+                                    <div class=" cell"  >
+                                        <img src="/images/aboutUsPic/ebo_awortwe_profile_pic.jpg" alt="ebo awortwe" style="width: 100%; height: 400px;">
+                                    </div>
+                                </div>
+                                <div class="card-section">
+
+                                    <div class="text-center">
+                                        <p>Ebo Awortwe</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
                 </div>
 
             </div>

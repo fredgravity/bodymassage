@@ -11,7 +11,8 @@
             <?php echo $__env->make('includes.spinner', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
         <?php if($item): ?>
-            <h3><?php echo e($item); ?></h3>
+            
+            <img src="/images/empty-cart.png" alt="empty_cart" style="width: 100%; height: 500px; ">
         <?php else: ?>
 
             <?php $__currentLoopData = $cart['results']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $result): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>

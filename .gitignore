@@ -8,6 +8,8 @@ node_modules/
 dist/
 vendor/
 .env
+bootstrap/cache/
+
 
 # Compiled Java class files
 *.class

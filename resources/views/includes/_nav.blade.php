@@ -13,7 +13,7 @@
         <div class="top-bar my-top-bar menu_icon_display" id="main-menu">
 
             <div class="top-bar-left">
-                <ul class=" menu medium-text-center medium-horizontal">
+                <ul class=" menu vertical text-center">
 
                     <li><a href="/massages">Massages</a></li>
                     <li><a href="/bookings">Bookings</a></li>
@@ -22,13 +22,19 @@
                     <li><a href="/corporate">Corporate</a></li>
                 </ul>
             </div>
-            <div class="top-bar-right">
-                <ul class="menu">
+            <div class="top-bar-right ">
+                {{--<ul class="menu vertical text-center ">--}}
 
                     @if(!isAuthenticated())
+                    {{--make menu all vertical if not logged in--}}
+                <ul class="menu vertical text-center ">
+
                         <li><a href="/login">Login</a></li>
                         <li><a href="/register">Register</a></li>
                     @else
+
+                        {{--make menu form small screen horizontal after logged in--}}
+                <ul class="menu text-center ">
 
                         <li>
 {{--TODO: update live version with this if else username on nav bar--}}
@@ -92,7 +98,7 @@
                 </ul>
             </div>
             <div class="top-bar-right">
-                <ul class="menu">
+                <ul class="menu ">
 
                     @if(!isAuthenticated())
                         <li><a href="/login">Login</a></li>

@@ -123,7 +123,7 @@ class UploadFile
 //        pnd(move_uploaded_file($tmpLocation, $destination));
 
         if(move_uploaded_file($tmpLocation, $destination)){
-            $fileobj->_optimisePath = UploadFile::compressImage($destination, $optimisedTo, 75, $filename);
+            $fileobj->_optimisePath = UploadFile::compressImage($destination, $optimisedTo, 100, $filename);
 
             return $fileobj;
 

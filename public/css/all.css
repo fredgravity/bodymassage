@@ -8982,8 +8982,19 @@ html.is-reveal-open body {
   padding: 0.7rem 1rem 1rem 0;
 }
 
+@media print, screen and (max-width: 39.99875em) {
+  .navigation .top-bar-right .menu .nav-logout {
+    padding-top: 0.8rem;
+    padding-left: 0.1rem;
+    margin-left: -0.1rem;
+    margin-right: -2.2rem;
+  }
+}
+
 .navigation .top-bar-right .menu .nav-logout-sc {
   padding: 0.7rem 1rem 1rem 0;
+  margin-left: -0.1rem;
+  margin-right: -1.2rem;
 }
 
 html,

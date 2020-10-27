@@ -12,7 +12,7 @@ ARTISAO.home.bookings = function () {
             setTimeout(function () {
                 $.dialog({
                     title: 'No User Authenticated!',
-                    content: 'We found no user authenticated. You will be redirected if you try to book without an Acounnt. Please Login to Book a massage.',
+                    content: 'We found no user authenticated. You will be redirected if you try to book without an Account. Please Login to Book a massage.',
                     useBootstrap:false,
                     containerFluid:false,
                     boxWidth:'50%',

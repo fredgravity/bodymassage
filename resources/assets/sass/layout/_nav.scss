@@ -91,8 +91,19 @@ $logo-img-folder: 'images';
         padding: 0.7rem 1rem 1rem 0;
       }
 
+      @include breakpoint(small only) {
+        .nav-logout {
+          padding-top: .8rem;
+          padding-left: 0.1rem;
+          margin-left: -0.1rem;
+          margin-right: -2.2rem;
+        }
+      }
+
       .nav-logout-sc{
         padding: .7rem 1rem 1rem 0;
+        margin-left: -0.1rem;
+        margin-right: -1.2rem;
       }
     }
   }
