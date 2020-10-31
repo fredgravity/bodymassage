@@ -40,6 +40,7 @@ require('../../assets/js/pages/login');-
 require('../../assets/js/pages/register');
 require('../../assets/js/pages/contact_us');
 require('../../assets/js/pages/card');
+require('../../assets/js/pages/about_us');
 
 
 require('../../assets/js/init');

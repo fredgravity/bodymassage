@@ -32,7 +32,7 @@
                             </p>
                         </div>
 
-                        <div class="medium-3 cell small-12" style="margin-top: 1rem;">
+                        <div class="medium-3 cell small-12 aboutus-profile" style="margin-top: 1rem;  max-width: 300px;">
                             <div class="card">
                                 <div class="card-divider">
                                     <div class="grid-x cell text-center">
@@ -40,7 +40,7 @@
                                     </div>
                                 </div>
                                 <div class="grid-padding-x grid-x">
-                                    <div class=" cell" >
+                                    <div class="cell aboutus-profile-img" >
                                         <img src="/images/aboutUsPic/fred_amoah_profile_pic.jpg" alt="frederick-amoah-sekyi" style="width: 100%; height: 400px;">
                                     </div>
                                 </div>
@@ -48,6 +48,9 @@
 
                                     <div class="text-center">
                                         <p>Frederick Amoah-Sekyi</p>
+                                        <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
                                     </div>
                                 </div>
 
@@ -55,7 +58,7 @@
                             </div>
                         </div>
 
-                        <div class=" medium-3 cell small-12" style="margin-top: 1rem;">
+                        <div class=" medium-3 cell small-12 aboutus-profile" style="margin-top: 1rem;  max-width: 300px;">
                             <div class="card">
                                 <div class="card-divider">
                                     <div class="grid-x cell text-center">
@@ -63,7 +66,7 @@
                                     </div>
                                 </div>
                                 <div class="grid-padding-x grid-x">
-                                    <div class=" cell"  >
+                                    <div class="cell aboutus-profile-img"  >
                                         <img src="/images/aboutUsPic/ebo_awortwe_profile_pic.jpg" alt="ebo awortwe" style="width: 100%; height: 400px;">
                                     </div>
                                 </div>
@@ -71,6 +74,9 @@
 
                                     <div class="text-center">
                                         <p>Ebo Awortwe</p>
+                                        <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
                                     </div>
                                 </div>
                             </div>

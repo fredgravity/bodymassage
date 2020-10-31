@@ -55,6 +55,11 @@
 
                 break;
 
+            case 'about_us':
+                ARTISAO.home.aboutus();
+
+                break;
+
         }
 
     });

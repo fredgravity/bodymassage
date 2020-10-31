@@ -9291,6 +9291,52 @@ span .fa-edit {
   margin-top: 1.5rem;
 }
 
+.about_us section .aboutus-profile {
+  -webkit-filter: grayscale(1);
+          filter: grayscale(1);
+  transition: 0.5s;
+}
+
+.about_us section .aboutus-profile a {
+  -webkit-filter: grayscale(1);
+          filter: grayscale(1);
+  transition: 0.5s;
+  display: none;
+}
+
+.about_us section .aboutus-profile:hover {
+  -webkit-filter: none;
+          filter: none;
+  cursor: pointer;
+}
+
+.about_us section .aboutus-profile:hover a {
+  -webkit-filter: none;
+          filter: none;
+  display: block;
+}
+
+@media print, screen and (max-width: 39.99875em) {
+  .about_us section .aboutus-profile {
+    max-width: none !important;
+  }
+}
+
+.about_us section .aboutus-profile li {
+  float: left;
+  list-style: none;
+  z-index: 5;
+  transform: translateY(-100px);
+  font-size: 2rem;
+  margin: 0 1.5rem;
+}
+
+@media print, screen and (min-width: 40em) and (max-width: 63.99875em) {
+  .about_us section .aboutus-profile li {
+    margin: 0 1.1rem;
+  }
+}
+
 #card_modal {
   font-size: 11px;
 }

@@ -48885,6 +48885,8 @@ __webpack_require__(/*! ../../assets/js/pages/contact_us */ "./resources/assets/
 
 __webpack_require__(/*! ../../assets/js/pages/card */ "./resources/assets/js/pages/card.js");
 
+__webpack_require__(/*! ../../assets/js/pages/about_us */ "./resources/assets/js/pages/about_us.js");
+
 __webpack_require__(/*! ../../assets/js/init */ "./resources/assets/js/init.js");
 
 /***/ }),
@@ -48963,6 +48965,10 @@ $(document).ready(function () {
     case 'contact_us':
       ARTISAO.home.contactus();
       break;
+
+    case 'about_us':
+      ARTISAO.home.aboutus();
+      break;
   }
 });
 $(window).on('load', function () {
@@ -48985,9 +48991,23 @@ $(window).on('load', function () {
 //Toggle burger menu on small screen
 $(document).ready(function () {
   $('.menu_icon').click(function () {
-    $('.menu_icon_display').toggle();
+    $('.menu_icon_display').slideToggle();
   });
 });
+
+/***/ }),
+
+/***/ "./resources/assets/js/pages/about_us.js":
+/*!***********************************************!*\
+  !*** ./resources/assets/js/pages/about_us.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+ARTISAO.home.aboutus = function () {};
 
 /***/ }),
 
