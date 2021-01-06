@@ -322,7 +322,43 @@ class AuthController extends BaseController
 
             }
         }
+        return false;
     }
+
+    public function resetPasswordForm(){
+        return view('auth/reset_password');
+    }
+
+    public function resetPassword(){
+        if (Request::exist('post')){
+            $request = Request::get('post');
+
+            if (CSRFToken::checkToken($request->token, false)){
+                $email = $request->email;
+
+                $random_password = generateRandomString(50);
+                $hash = password_hash($random_password, PASSWORD_BCRYPT);
+                $user_reset = User::where('email', $request->email)->update(
+                    ['password' => $hash]
+                );
+
+                if ($user_reset){
+                    //send email to user
+                    $user = User::where('email', $request->email)->first();
+//                    pnd($user->fullname);
+                    AuthController::sendPassword($user->username, $user->fullname, $request->email, $random_password, true);
+                    Session::flash('success', "Your account password has been reset successfully. Please check your email for instruction");
+                    Redirect::to('/login');
+                }else{
+                    Session::flash('error', "Your account email is not valid. Please enter your registered email address");
+                    Redirect::to('/reset_password');
+                }
+
+                ;
+            }
+        }
+    }
+
 
     public function logout(){
 
@@ -464,7 +500,14 @@ class AuthController extends BaseController
         return $vkey;
     }
 
-    public static function sendPassword($username,$fullname, $email, $password){
+    public static function sendPassword($username,$fullname, $email, $password, $reset=false){
+
+        $view='';
+        if ($reset){
+            $view = 'reset_password';
+        }else{
+            $view = 'user_details';
+        }
 
         $details = [
             'username' => $username,
@@ -476,7 +519,7 @@ class AuthController extends BaseController
             'to'    => $email,
             'name'    => $fullname,
             'subject'=> 'Your new user Details',
-            'view'  => 'user_details',
+            'view'  => $view,
             'body'  => $details
 
         ];

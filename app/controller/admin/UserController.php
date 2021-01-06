@@ -26,37 +26,36 @@ use App\classes\Role;
 class UserController extends BaseController
 {
 
-    public $users, $tableName ='users',  $user, $workers, $usersLink, $workersLink;
+    public $users, $tableName ='users',  $user, $workers, $usersLink, $workersLink, $total, $totalw, $recordNum=2;
+
 
     public function __construct()
     {
-
+//pnd($_GET);
         if (!Role::middleware('admin')){
             Redirect::to('/');
         };
 
         $this->users = User::where('role', 'user')->orderBy('id', 'DESC')->get();
         $this->workers = User::where('role', 'worker')->orderBy('id', 'DESC')->get();
-        $total = count($this->users);
-        $totalw = count($this->workers);
-        list($this->users, $this->usersLink) = paginateUsers(15, $total, $this->tableName, new User());
-        list($this->workers, $this->workersLink) = paginateWorkers(10, $totalw, $this->tableName, new User());
-
+        $this->total = count($this->users);
+        $this->totalw = count($this->workers);
 
     }
 
 
     public function showIndex(){
+        list($this->users, $this->usersLink) = myPaginator($this->recordNum, $this->total, $this->tableName, new User(), 'user');
         $users = $this->users;
         $links = $this->usersLink;
         $role = 'user';
-//        if ($users)
+
         return view('admin/user/index', compact('users', 'links', 'role'));
     }
 
 
     public function showWorkers(){
-
+        list($this->workers, $this->workersLink) = myPaginator($this->recordNum, $this->totalw, $this->tableName, new User(), 'worker');
         $workers = $this->workers;
         $links = $this->workersLink;
         $role = 'worker';
@@ -64,11 +63,36 @@ class UserController extends BaseController
         return view('admin/user/index', compact('workers', 'role', 'links'));
     }
 
+
+    public function showIndexNext($params){
+        $urlString = $_SERVER['REQUEST_URI'];
+        $pageId = $params['id'];
+        $role = '';
+        if (strpos($urlString, 'users')){
+            $role = 'user';
+        }elseif (strpos($urlString, 'workers')){
+            $role = 'worker';
+        }
+
+        $this->nextPageUsers($role, $pageId);
+
+    }
+
+
+    public function nextPageUsers($role, $pageId){
+        list($this->users, $this->usersLink)= myPaginatorNext($this->recordNum, $this->total, $this->tableName, new User(), $role, $pageId);
+        $users = $this->users;
+        $links = $this->usersLink;
+
+        return view('admin/user/index', compact('users', 'links', 'role'));
+    }
+
+
     public function editUser($params){
         $user = UserController::getUser($params['id']);
 
 
-        return view('admin/user/editUser', ['user'=>$user]);
+        return view('admin/user/editUser', ['user'=>$user ]);
     }
 
 
@@ -76,7 +100,7 @@ class UserController extends BaseController
         if (Request::exist('post')){
             $requests = Request::get('post');
             $fileError = [];
-//pnd($requests);
+
             $id = $params['id'];
 
             if (CSRFToken::checkToken($requests->token, false)){
@@ -87,8 +111,8 @@ class UserController extends BaseController
 
                         'fullname' => ['required' => true, 'minLength' => 6, 'maxLength' => 50, 'mixed'=>true],
                         'address' => ['required' => true, 'minLength' => 4, 'maxLength' => 500, 'mixed' => true],
-                        'gps' => [ 'minLength' => 4, 'maxLength' => 500, 'mixed' => true],
-                        'region' => [ 'minLength' => 4, 'maxLength' => 50, 'mixed' => true],
+                        'gps' => ['minLength' => 4, 'maxLength' => 500, 'mixed' => true],
+                        'region' => ['required' => true, 'minLength' => 4, 'maxLength' => 50, 'mixed' => true],
                         'city' => ['required' => true, 'minLength' => 3, 'maxLength' => 50, 'string' => true],
                         'role' => ['required' => true, 'minLength' => 3, 'maxLength' => 7, 'string' => true],
                         'phone' => ['required' => true, 'minLength' => 4, 'maxLength' => 15, 'number' => true],
@@ -101,6 +125,7 @@ class UserController extends BaseController
                     //VALIDATE UPLOADED FILE
                     $file = Request::get('file');
                     $imagePath = '';
+
                     //UPDATE PROFILE IMAGE IF AN IMAGE HAS BEEN PROVIDED
                     isset($file->userImage->name)? $filename = $file->userImage->name : $filename = '';
 
@@ -120,13 +145,13 @@ class UserController extends BaseController
                         $tmpFile = $file->userImage->tmp_name;
                         $optimideTo = "images" .DS. 'optimiseImages'. DS . "uploads".DS. 'users_pics'. DS . $this->user['username'];
                         $folder = 'images'. DS . 'uploads'. DS . 'users'. DS . $this->user['username']. DS . 'profile_pic';
-
+//pnd($folder);
                         //CREATE IMAGE PATH
                         $imagePath = UploadFile::move($tmpFile, $folder, $optimideTo, $filename, 'profile_pic')->optimisedPath();
 
 
                     }
-//
+
 
                     if ($validate->hasError() || count($fileError)){
 
@@ -139,7 +164,6 @@ class UserController extends BaseController
                         }
 
                     };
-//                    pnd($requests->fullname);
 
 //                  $update_user = true;
                     $update_user = User::where([['username', $this->user['username']], ['id', $id]])
@@ -161,7 +185,7 @@ class UserController extends BaseController
                         if ($requests->role === 'user'){
                             Redirect::to('/profile/'.user()->username.'/users/'.$id.'/edit_user');
                         }else{
-                            Redirect::to('/profile/'.user()->username.'/workers/'.$id.'/edit_worker');
+                            Redirect::to('/profile/'.user()->username.'/users/'.$id.'/edit_worker');
                         }
 
                     }else{
@@ -197,20 +221,20 @@ class UserController extends BaseController
 
                 //GET USER ROLE AND DELETE USER
                 if((int)$id){
-                    $userRole = User::where(['id'=> $id, 'role' => 'user'])->first();
+                    $userRole = User::where('id', (int)$id)->first();
 
                     if ($userRole->role === 'user'){
                         User::where('id', $id)->delete();
 
                         Session::flash('success', 'User Deleted Successfully');
 
-                        Redirect::to('/profile/'.$userRole->username.'/users');
+                        Redirect::to('/profile/'.\user()->username.'/users');
                     }else{
                         User::where('id', $id)->delete();
 
                         Session::flash('success', 'User Deleted Successfully');
 
-                        Redirect::to('/profile/'.$userRole->username.'/workers');
+                        Redirect::to('/profile/'.\user()->username.'/workers');
                     }
 
                 }
@@ -230,7 +254,6 @@ class UserController extends BaseController
     public function editWorker($params){
         $id = $params['id'];
         $worker = UserController::getUser($id);
-
         if ($worker->role === 'worker'){
             return view('admin/user/editWorker', compact('worker'));
         }

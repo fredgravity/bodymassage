@@ -48730,24 +48730,63 @@ ARTISAO.admin.dashboard = function () {
 };
 
 function charts() {
+  //GET CANVAS
   var revenueCanvas = $('#monthly-revenue');
-  var orderCanvas = $('#monthly-order'); //CREATE LABELS FOR THE CHART
+  var orderCanvas = $('#monthly-order');
+  var yearlyOrderCanvas = $('#yearly-orders'); //CREATE LABELS FOR THE CHART
 
   var revenueLabelDate = [];
   var orderLabelDate = [];
   var orderCount = [];
-  var revenueSummed = [];
+  var revenueSummed = []; //YEARLY ORDERS
+
+  var monthOrderObj = [];
+  var monthName = ['January', 'Febraury', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  var orderMonthCount = []; //YEARLY REVENUE
+
+  var monthRevenueObj = [];
+  var revenueMonthName = ['January', 'Febraury', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  var revenueMonthSummed = [];
   axios.get('/admin/dashboard_charts').then(function (response) {
     //GET DATA FROM ORDERS LOOP THROUGH THEM AND ADD TO THE ORDER COUNT ARRAY AND GET THE DATE FOR THE LABEL
     response.data.orders.forEach(function (monthly) {
-      orderCount.push(monthly.count);
-      orderLabelDate.push(monthly.new_date); // console.log(orderCount);
+      orderCount.push(monthly.count); //count id of a user
+
+      orderLabelDate.push(monthly.new_date); // in a particular month
+
+      monthOrderObj[monthly.month_name] = monthly.count; //in a particular month name
     }); //GET DATA FROM REVENUE, LOOP THROUGH THEM AND ADD TO THE REVENUE SUM ARRAY AND GET THE DATE FOR THE LABEL
 
     response.data.revenues.forEach(function (monthly) {
-      revenueSummed.push(monthly.amount);
-      revenueLabelDate.push(monthly.new_date); // console.log(revenueSummed);
-    }); //CALL THE CHART JS CLASS
+      revenueSummed.push(monthly.amount); // add the amount of a user
+
+      revenueLabelDate.push(monthly.new_date); //in a particular month
+
+      monthRevenueObj[monthly.month_name] = monthly.amount; //in a particular month name
+      // console.log(revenueSummed);
+    }); //YEARLY ORDERS
+
+    monthName.forEach(function (data) {
+      var obj = Object.keys(monthOrderObj); // console.log(obj);
+
+      if (obj.includes(data)) {
+        orderMonthCount.push(monthOrderObj[data]);
+      } else {
+        orderMonthCount.push(0);
+      }
+    }); //YEARLY REVENUE
+
+    revenueMonthName.forEach(function (data) {
+      var obj = Object.keys(monthRevenueObj); // console.log(obj);
+
+      if (obj.includes(data)) {
+        revenueMonthSummed.push(monthRevenueObj[data]);
+      } else {
+        revenueMonthSummed.push(0);
+      }
+    }); // console.log(revenueMonthSummed);
+    // console.log(x);
+    //CALL THE CHART JS CLASS
 
     new Chart(revenueCanvas, {
       type: 'bar',
@@ -48770,6 +48809,28 @@ function charts() {
           backgroundColor: ['#0578F1']
         }]
       }
+    });
+    var dataFirst = {
+      label: "Orders",
+      data: orderMonthCount,
+      // lineTension: 0,
+      // fill: false,
+      borderColor: 'red'
+    };
+    var dataSecond = {
+      label: "Revenue",
+      data: revenueMonthSummed,
+      // lineTension: 0,
+      // fill: false,
+      borderColor: 'blue'
+    };
+    var multiData = {
+      labels: monthName,
+      datasets: [dataFirst, dataSecond]
+    };
+    new Chart(yearlyOrderCanvas, {
+      type: 'line',
+      data: multiData
     });
   });
 }
@@ -48879,7 +48940,9 @@ __webpack_require__(/*! ../../assets/js/pages/cart */ "./resources/assets/js/pag
 
 __webpack_require__(/*! ../../assets/js/pages/login */ "./resources/assets/js/pages/login.js");
 
--__webpack_require__(/*! ../../assets/js/pages/register */ "./resources/assets/js/pages/register.js");
+__webpack_require__(/*! ../../assets/js/pages/reset_password */ "./resources/assets/js/pages/reset_password.js");
+
+__webpack_require__(/*! ../../assets/js/pages/register */ "./resources/assets/js/pages/register.js");
 
 __webpack_require__(/*! ../../assets/js/pages/contact_us */ "./resources/assets/js/pages/contact_us.js");
 
@@ -48960,6 +49023,7 @@ $(document).ready(function () {
     case 'auth':
       ARTISAO.home.login();
       ARTISAO.home.register();
+      ARTISAO.home.reset_password();
       break;
 
     case 'contact_us':
@@ -49596,7 +49660,7 @@ $(document).ready(function () {
       if (id === 12) {
         $('#desc_name').text(prod_name);
       } else {
-        $('#desc_name').text(prod_name + ' - GHS ' + prod_price);
+        $('#desc_name').text(prod_name + ' - ' + formatter.format(prod_price));
       }
 
       if (res.data.prod_id === 12) {
@@ -49610,6 +49674,14 @@ $(document).ready(function () {
       console.log(err);
     }); // alert(id);
     // console.log(e.target.getAttribute('data-slider-id'))
+  }); // Create our number formatter.
+
+  var formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'GHS' // These options are needed to round to whole numbers if that's what you want.
+    //minimumFractionDigits: 0,
+    //maximumFractionDigits: 0,
+
   });
 
   function booknow(secs) {
@@ -49727,6 +49799,57 @@ ARTISAO.home.register = function () {
 
 /***/ }),
 
+/***/ "./resources/assets/js/pages/reset_password.js":
+/*!*****************************************************!*\
+  !*** ./resources/assets/js/pages/reset_password.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+ARTISAO.home.reset_password = function () {
+  $(document).ready(function () {
+    captcha(); // alert('hi');
+  });
+
+  function captcha() {
+    $('#reset-password-btn').click(function (e) {
+      e.preventDefault();
+      $('.load-spinner').show();
+      grecaptcha.ready(function () {
+        grecaptcha.execute('6LfVQgEVAAAAAJAa6hy8bWyfU0cTl2kikz_vQMhA', {
+          action: 'reset_password'
+        }).then(function (token) {
+          // $('#login-form').prepend('<input type="hidden" name="recaptcha" value="' + token + '">');
+          // let action = $('#login-form').attr('action');
+          // console.log(postDate);
+          var postData = $.param({
+            token: token
+          });
+          axios.post('/recaptcha', postData).then(function (res) {
+            // console.log(res.data);
+            if (res.data.success) {
+              $('#reset_password-form').submit();
+            } else {
+              $.dialog({
+                title: 'Failed to Login!',
+                content: 'Invalid form Recaptcha token. Please try again',
+                useBootstrap: false,
+                containerFluid: false,
+                boxWidth: '50%',
+                type: 'red'
+              });
+            }
+          })["catch"](function (err) {
+            console.log(err);
+          }); // Add your logic to submit to your backend server here.
+        });
+      });
+    });
+  }
+};
+
+/***/ }),
+
 /***/ "./resources/assets/js/user/user_dashboard.js":
 /*!****************************************************!*\
   !*** ./resources/assets/js/user/user_dashboard.js ***!
@@ -49743,24 +49866,63 @@ ARTISAO.user.dashboard = function () {
 };
 
 function charts() {
+  //GET CANVAS
   var revenueCanvas = $('#monthly-revenue');
-  var orderCanvas = $('#monthly-order'); //CREATE LABELS FOR THE CHART
+  var orderCanvas = $('#monthly-order');
+  var yearlyOrderCanvas = $('#yearly-orders'); //CREATE LABELS FOR THE CHART
 
   var revenueLabelDate = [];
   var orderLabelDate = [];
   var orderCount = [];
-  var revenueSummed = [];
+  var revenueSummed = []; //YEARLY ORDERS
+
+  var monthOrderObj = [];
+  var monthName = ['January', 'Febraury', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  var orderMonthCount = []; //YEARLY REVENUE
+
+  var monthRevenueObj = [];
+  var revenueMonthName = ['January', 'Febraury', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  var revenueMonthSummed = [];
   axios.get('/user/charts').then(function (response) {
     //GET DATA FROM ORDERS LOOP THROUGH THEM AND ADD TO THE ORDER COUNT ARRAY AND GET THE DATE FOR THE LABEL
     response.data.orders.forEach(function (monthly) {
-      orderCount.push(monthly.count);
-      orderLabelDate.push(monthly.new_date); // console.log(orderCount);
+      orderCount.push(monthly.count); //count id of a user
+
+      orderLabelDate.push(monthly.new_date); // in a particular month
+
+      monthOrderObj[monthly.month_name] = monthly.count; //in a particular month name
     }); //GET DATA FROM REVENUE, LOOP THROUGH THEM AND ADD TO THE REVENUE SUM ARRAY AND GET THE DATE FOR THE LABEL
 
     response.data.revenues.forEach(function (monthly) {
-      revenueSummed.push(monthly.amount);
-      revenueLabelDate.push(monthly.new_date); // console.log(revenueSummed);
-    }); //CALL THE CHART JS CLASS
+      revenueSummed.push(monthly.amount); // add the amount of a user
+
+      revenueLabelDate.push(monthly.new_date); //in a particular month
+
+      monthRevenueObj[monthly.month_name] = monthly.amount; //in a particular month name
+      // console.log(revenueSummed);
+    }); //YEARLY ORDERS
+
+    monthName.forEach(function (data) {
+      var obj = Object.keys(monthOrderObj); // console.log(obj);
+
+      if (obj.includes(data)) {
+        orderMonthCount.push(monthOrderObj[data]);
+      } else {
+        orderMonthCount.push(0);
+      }
+    }); //YEARLY REVENUE
+
+    revenueMonthName.forEach(function (data) {
+      var obj = Object.keys(monthRevenueObj); // console.log(obj);
+
+      if (obj.includes(data)) {
+        revenueMonthSummed.push(monthRevenueObj[data]);
+      } else {
+        revenueMonthSummed.push(0);
+      }
+    }); // console.log(revenueMonthCount);
+    // console.log(x);
+    //CALL THE CHART JS CLASS
 
     new Chart(revenueCanvas, {
       type: 'bar',
@@ -49783,6 +49945,28 @@ function charts() {
           backgroundColor: ['#0578F1']
         }]
       }
+    });
+    var dataFirst = {
+      label: "Orders",
+      data: orderMonthCount,
+      // lineTension: 0,
+      // fill: false,
+      borderColor: 'red'
+    };
+    var dataSecond = {
+      label: "Revenue",
+      data: revenueMonthSummed,
+      // lineTension: 0,
+      // fill: false,
+      borderColor: 'blue'
+    };
+    var multiData = {
+      labels: monthName,
+      datasets: [dataFirst, dataSecond]
+    };
+    new Chart(yearlyOrderCanvas, {
+      type: 'line',
+      data: multiData
     });
   });
 }

@@ -47,6 +47,7 @@
             case 'auth':
                 ARTISAO.home.login();
                 ARTISAO.home.register();
+                ARTISAO.home.reset_password();
 
                 break;
 
@@ -59,6 +60,7 @@
                 ARTISAO.home.aboutus();
 
                 break;
+
 
         }
 

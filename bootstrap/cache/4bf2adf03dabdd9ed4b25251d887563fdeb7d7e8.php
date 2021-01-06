@@ -45,7 +45,7 @@
                         <input type="submit" class="button hollow float-right ">
                     </form>
 
-                    <p>Don't have an Account? <a href="/register"> Register Here </a></p>
+                    <p>Don't have an Account? <a href="/register"> Register Here </a> OR <span><a href="/reset_password">Reset Password</a></span></p>
                     
                 </div>
 

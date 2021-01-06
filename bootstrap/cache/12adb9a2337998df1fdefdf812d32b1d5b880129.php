@@ -31,7 +31,7 @@
                             </p>
                         </div>
 
-                        <div class="medium-3 cell small-12 aboutus-profile" style="margin-top: 1rem;  max-width: 300px;">
+                        <div class="medium-3 cell small-12 aboutus-profile " style="margin-top: 1rem;  max-width: 300px;">
                             <div class="card">
                                 <div class="card-divider">
                                     <div class="grid-x cell text-center">
@@ -57,7 +57,7 @@
                             </div>
                         </div>
 
-                        <div class=" medium-3 cell small-12 aboutus-profile" style="margin-top: 1rem;  max-width: 300px;">
+                        <div class=" medium-3 cell small-12 aboutus-profile " style="margin-top: 1rem;  max-width: 300px;">
                             <div class="card">
                                 <div class="card-divider">
                                     <div class="grid-x cell text-center">

@@ -38,10 +38,10 @@ class Mail
 
         //DEBUG
         $env = getenv('APP_ENV');
-        if ($env !== 'production'){
+        if ($env == 'production'){
             $this->_mail->SMTPDebug = '';
         }else{
-            $this->_mail->SMTPDebug = '2';
+            $this->_mail->SMTPDebug = '';
         }
 
         //AUTHENTICATION INFO
@@ -77,7 +77,6 @@ class Mail
         }
 
         try{
-
             return $this->_mail->send();
         }catch (Exception $e){
             return 'Message: '.$e->getMessage();

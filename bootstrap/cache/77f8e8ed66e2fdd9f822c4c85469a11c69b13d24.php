@@ -7,9 +7,9 @@
     <div class="grid-container fluid product">
 
         <h2 class="text-center">
-            Payments (GHS <?php echo e($revenue); ?>
+            GHS <?php echo e(number_format($revenue, 2)); ?>
 
-            )</h2>
+        </h2>
         <hr>
 
         <section>
@@ -42,11 +42,7 @@
                                 <tr>
                                     <td>Order Number</td>
                                     <td>Total Amount</td>
-                                    
-                                    
                                     <td>Status</td>
-                                    
-                                    
                                     <td>Action</td>
                                 </tr>
                             </thead>
@@ -56,30 +52,14 @@
                                 <tr>
                                     <td><?php echo e($payment['order_number']); ?></td>
                                     <td><?php echo e($payment['amount']); ?></td>
-                                    
-                                    
                                     <td><?php echo e($payment['status']); ?></td>
-                                    
-                                    
 
                                     <td>
                                         <span data-tooltip class="has-tip top" tabindex="1" title="Payment Details" >
                                             <a href='/profile/<?php echo e(user()->username); ?>/payments/<?php echo e($payment['id']); ?>/payment_details'><i class="fa fa-arrow-alt-circle-right" title="Payment Details"></i></a>
                                         </span>
 
-                                                    &nbsp;
 
-                                                    
-                                                    
-                                                    
-
-
-                                                    
-                                            
-                                                
-                                                
-                                            
-                                        
                                     </td>
 
                                 </tr>
@@ -89,10 +69,9 @@
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </table>
 
-                        <?php if($links): ?>
-                            <?php echo $links; ?>
+                        
+                    <?php echo $__env->make('includes.paginate_links', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
-                            <?php endif; ?>
 
                 <?php endif; ?>
 

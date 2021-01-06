@@ -125,7 +125,7 @@
                         @if(user())
                             <textarea name="place_name_home" id="place_name_home"  cols="5" rows="3">{{ user()->address }}</textarea>
                         @else
-                            <textarea name="place_name_home" id="place_name_home"  cols="5" rows="3"></textarea>
+                            <textarea name="place_name_home" id="place_name_home"  cols="5" rows="3" placeholder="Please use dash(-) instead of slashes(/\)"></textarea>
                         @endif
                     </div>
 
@@ -136,7 +136,7 @@
                     <div class="place_name medium-10 small-12 cell" style="display: none;">
                         <label for="place_name_other">* Other Address:</label>
                         {{--<input type="text" name="place_name"  id="place_name" value="">--}}
-                        <textarea name="place_name_other" id="place_name_other" cols="5" rows="3"></textarea>
+                        <textarea name="place_name_other" id="place_name_other" cols="5" rows="3" placeholder="Please use dash(-) instead of slashes(/\)"></textarea>
                     </div>
 
                 </div>

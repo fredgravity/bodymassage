@@ -124,7 +124,7 @@
                         <?php if(user()): ?>
                             <textarea name="place_name_home" id="place_name_home"  cols="5" rows="3"><?php echo e(user()->address); ?></textarea>
                         <?php else: ?>
-                            <textarea name="place_name_home" id="place_name_home"  cols="5" rows="3"></textarea>
+                            <textarea name="place_name_home" id="place_name_home"  cols="5" rows="3" placeholder="Please use dash(-) instead of slashes(/\)"></textarea>
                         <?php endif; ?>
                     </div>
 
@@ -135,7 +135,7 @@
                     <div class="place_name medium-10 small-12 cell" style="display: none;">
                         <label for="place_name_other">* Other Address:</label>
                         
-                        <textarea name="place_name_other" id="place_name_other" cols="5" rows="3"></textarea>
+                        <textarea name="place_name_other" id="place_name_other" cols="5" rows="3" placeholder="Please use dash(-) instead of slashes(/\)"></textarea>
                     </div>
 
                 </div>

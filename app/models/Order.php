@@ -21,8 +21,10 @@ class Order extends Model
         $orders = []; //SET UP CATEGORIES ARRAY
 
         foreach ($data as $field){
+
             //CARBON FORMAT DATE FROM DB PROPERLY
-            $added = new Carbon($field->created_at);
+//            $added = new Carbon($field->created_at);
+            $newAdded = Carbon::createFromFormat('Y-m-d H:i:s', $field->created_at);
 
             array_push($orders, [
                 'id'    => $field->id,
@@ -30,9 +32,10 @@ class Order extends Model
                 'user_id' => $field->user_id,
                 'product_id' => $field->product_id,
                 'ref_no' => $field->reference_no,
-                'added' => $added->toFormattedDateString()
+                'added' => $newAdded->format('d-m-Y')
             ]);
         }
+//        pnd($orders);
         return $orders;
     }
 

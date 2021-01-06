@@ -1,4 +1,6 @@
 $background: #f2f2f2;
+$site-color: #569ff7;
+$site-white-color: #F0F8FF;
 $heading-large: 2.5rem ;
 $heading-medium: 2rem ;
 $heading-small: 1.7rem;
@@ -21,7 +23,7 @@ html, body{
 
 .notify{
   display: none;
-  background-color: #1585f1;
+  background-color: #569ff7;
   color: #ffffff;
   position: fixed;
   right: 1rem;
@@ -212,4 +214,13 @@ span{
   max-width: 400px;
   height: auto;
   //border: 1px solid #0c6bc7;
+}
+
+.paginate-links{
+  li{
+    a{
+      color: $site-white-color;
+    }
+  }
+  //list-style: none;
 }

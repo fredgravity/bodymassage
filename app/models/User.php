@@ -36,30 +36,35 @@ class User extends Model
 
     public function transformToArray($data){
         $users = []; //SET UP CATEGORIES ARRAY
-
+//pnd($data);
         foreach ($data as $field){
             //CARBON FORMAT DATE FROM DB PROPERLY
-            $added = new Carbon($field->created_at);
-            $updated = new Carbon($field->updated_at);
+//            $added = new Carbon($field->created_at);
 
-            array_push($users, [
-                'id'           => $field->id,
-                'username'     => $field->username,
-                'fullname'     => $field->fullname,
-                'email'        => $field->email,
-                'phone'        => $field->phone,
-                'country'      => $field->country,
-                'region'       => $field->region,
-                'city'         => $field->city,
-                'address'      => $field->address,
-                'gps'      => $field->gps,
-                'role'      => $field->role,
-                'district'      => $field->district,
-                'image'        => $field->image_path,
-                'added'        => $added->toFormattedDateString(),
-                'updated'      => $updated->toFormattedDateString()
-            ]);
-        }
+                $newAdded = Carbon::createFromFormat('Y-m-d H:i:s', $field->created_at);
+
+                $newUpdated = Carbon::createFromFormat('Y-m-d H:i:s', $field->updated_at);
+
+                array_push($users, [
+                    'id'           => $field->id,
+                    'username'     => $field->username,
+                    'fullname'     => $field->fullname,
+                    'email'        => $field->email,
+                    'phone'        => $field->phone,
+                    'country'      => $field->country,
+                    'region'       => $field->region,
+                    'city'         => $field->city,
+                    'address'      => $field->address,
+                    'gps'      => $field->gps,
+                    'role'      => $field->role,
+                    'district'      => $field->district,
+                    'image'        => $field->image_path,
+                    'added'        => $newAdded->format('d-m-Y'),
+                    'updated'      => $newUpdated->format('d-m-Y')
+                ]);
+            }
+
+
         return $users;
     }
 

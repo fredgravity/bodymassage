@@ -70,7 +70,7 @@
                             </thead>
 
                                 @foreach($users as $user)
-
+                                {{--{{ pnd($user) }}--}}
                                 <tbody>
                                 <tr>
                                     <td>{{$user['username']}}</td>
@@ -105,10 +105,10 @@
                                 @endforeach
                         </table>
                     @endif
-
-                        @if($links)
-                            {!! $links !!}
-                        @endif
+@include('includes.paginate_links')
+                        {{--@if($links)--}}
+                            {{--{!! $links !!}--}}
+                        {{--@endif--}}
 
                     @endif
 
@@ -165,10 +165,10 @@
                             </table>
 
                         @endif
-
-                        @if($links)
-                            {!! $links !!}
-                            @endif
+@include('includes.paginate_links')
+                        {{--@if($links)--}}
+                            {{--{!! $links !!}--}}
+                            {{--@endif--}}
 
                     @endif
             </div>

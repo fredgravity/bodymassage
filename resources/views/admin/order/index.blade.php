@@ -76,10 +76,10 @@
 
                             @endforeach
                         </table>
-                        @if($links)
-                            {!! $links !!}
-                            @endif
-
+                        {{--@if($links)--}}
+                            {{--{!! $links !!}--}}
+                            {{--@endif--}}
+@include('includes.paginate_links')
 
                 @endif
 

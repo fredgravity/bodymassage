@@ -22,7 +22,7 @@ use App\classes\Role;
 class OrderController extends BaseController
 {
 
-    public $tableName = 'orders', $orders, $users,  $orderLinks, $search;
+    public $tableName = 'orders',$total, $orders, $users,  $orderLinks, $search, $recordNum=5;
     private $_data, $_tmpFile;
 
     public function __construct()
@@ -35,19 +35,49 @@ class OrderController extends BaseController
         $this->orders = Order::all();
         $this->users = User::all();
 //        pnd($this->orders);
-        $total = count($this->orders);
-        list($this->orders, $this->orderLinks) = paginate(5, $total, $this->tableName, new Order);
+        $this->total = count($this->orders);
 
     }
 
 
     public function showOrders(){
+        list($this->orders, $this->orderLinks) = myPaginator($this->recordNum, $this->total, $this->tableName, new Order);
+
         $orders = $this->orders;
         $links = $this->orderLinks;
         $users = $this->users;
 
         return view('admin/order/index', compact(['orders', 'links', 'users']));
     }
+
+
+
+
+    public function showIndexNext($params){
+//        pnd($params);
+        $urlString = $_SERVER['REQUEST_URI'];
+        $pageId = $params['id'];
+        $role = '';
+        if (strpos($urlString, 'users')){
+            $role = 'user';
+        }elseif (strpos($urlString, 'workers')){
+            $role = 'worker';
+        }
+//pnd($role);
+        $this->nextPageUsers($role, $pageId);
+
+    }
+
+
+    public function nextPageUsers($role, $pageId){
+        list($this->orders, $this->orderLinks)= myPaginatorNext($this->recordNum, $this->total, $this->tableName, new Order(), $role, $pageId);
+        $orders = $this->orders;
+        $links = $this->orderLinks;
+        $users = $this->users;
+
+        return view('admin/order/index', compact('orders', 'links', 'users'));
+    }
+
 
 
     public function showOrderDetails($params){

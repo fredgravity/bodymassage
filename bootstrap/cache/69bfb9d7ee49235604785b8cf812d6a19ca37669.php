@@ -75,11 +75,10 @@
 
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </table>
-                        <?php if($links): ?>
-                            <?php echo $links; ?>
-
-                            <?php endif; ?>
-
+                        
+                            
+                            
+<?php echo $__env->make('includes.paginate_links', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
                 <?php endif; ?>
 

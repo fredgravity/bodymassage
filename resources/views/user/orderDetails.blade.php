@@ -28,7 +28,7 @@
                                     {{--<td>Phone #</td>--}}
                                     <td>Hours</td>
                                     <td>Total </td>
-                                    <td>Status</td>
+                                    <td>Paid Status</td>
                                     <td>Reference No.</td>
                                 </tr>
                             </thead>

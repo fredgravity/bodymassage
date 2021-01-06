@@ -84,6 +84,18 @@ $router->map('POST', '/profile/[a:user]/users/[i:id]/update_user', 'App\Controll
 $router->map('POST', '/profile/[a:user]/users/[i:id]/delete_user', 'App\Controller\Admin\UserController@deleteUser','delete_user');
 $router->map('GET', '/profile/[a:user]/users/register', 'App\Controller\AuthController@registerForm','admin_user_register');
 
+
+//ADMIN PAGINATOR
+$router->map('GET', '/profile/[a:user]/users/[i:id]', 'App\Controller\Admin\UserController@showIndexNext','show_users_next');
+$router->map('GET', '/profile/[a:user]/workers/[i:id]', 'App\Controller\Admin\UserController@showIndexNext','show_workers_next');
+
+$router->map('GET', '/profile/[a:user]/payments/[i:id]', 'App\Controller\Admin\PaymentController@showIndexNext','show_payments_next');
+
+$router->map('GET', '/profile/[a:user]/orders/[i:id]', 'App\Controller\Admin\OrderController@showIndexNext','show_orders_next');
+
+
+
+
 //admin charts
 $router->map('GET', '/admin/dashboard_charts', 'App\Controller\Admin\DashboardController@getChartData','dashboard_charts');
 $router->map('GET', '/admin/payment_graph', 'App\Controller\Admin\PaymentController@payment_graph','payment_graph');
@@ -112,6 +124,8 @@ $router->map('GET', '/profile/[a:user]/payments/graph', 'App\Controller\Admin\Pa
 //Authentication
 $router->map('GET', '/login', 'App\Controller\AuthController@showLoginForm','login_users_form');
 $router->map('POST', '/login', 'App\Controller\AuthController@login','login_users');
+$router->map('GET', '/reset_password', 'App\Controller\AuthController@resetPasswordForm','show_reset_password');
+$router->map('POST', '/reset_password', 'App\Controller\AuthController@resetPassword','reset_password');
 $router->map('GET', '/register', 'App\Controller\AuthController@showRegisterForm','register_users_form');
 $router->map('POST', '/register', 'App\Controller\AuthController@register','register_users');
 $router->map('GET', '/logout', 'App\Controller\AuthController@logout','logout_users');

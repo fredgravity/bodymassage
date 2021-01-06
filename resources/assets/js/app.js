@@ -36,7 +36,8 @@ require('../../assets/js/user/user_dashboard');
 require('../../assets/js/pages/animate');
 require('../../assets/js/pages/bookings');
 require('../../assets/js/pages/cart');
-require('../../assets/js/pages/login');-
+require('../../assets/js/pages/login');
+require('../../assets/js/pages/reset_password');
 require('../../assets/js/pages/register');
 require('../../assets/js/pages/contact_us');
 require('../../assets/js/pages/card');

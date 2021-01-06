@@ -32,13 +32,22 @@ class OrderDetail extends Model
         return $this->belongsTo(Product::class);
     }
 
+//    public function payment(){
+//        return $this->hasOne(Payment::class);
+//    }
+
 
     public function transform($data){
+//    public function transformToArray($data){
         $orders = []; //SET UP CATEGORIES ARRAY
 
         foreach ($data as $field){
             //CARBON FORMAT DATE FROM DB PROPERLY
-            $added = new Carbon($field->created_at);
+//            $added = new Carbon($field->created_at);
+
+            $newAdded = Carbon::createFromFormat('Y-m-d H:i:s', $field->created_at);
+
+//            $newUpdated = Carbon::createFromFormat('Y-m-d H:i:s', $field->updated_at);
 
             array_push($orders, [
                 'id'    => $field->id,
@@ -55,7 +64,7 @@ class OrderDetail extends Model
                 'date_picked' => $field->date_picked,
                 'status' => $field->status,
                 'reference_no' => $field->reference_no,
-                'added' => $added->toFormattedDateString()
+                'added' =>$newAdded
             ]);
         }
         return $orders;

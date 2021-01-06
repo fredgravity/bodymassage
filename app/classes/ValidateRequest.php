@@ -16,8 +16,8 @@ class ValidateRequest
 
     private static $_error = [];
     private static $_errorMessages = [
-        'string'    => 'The :attribute field should contain only letters',
-        'number'    => 'The :attribute field should contain only numbers e.g 20.0, 20',
+        'strings'    => 'The :attribute field should contain only letters',
+        'numbers'    => 'The :attribute field should contain only numbers e.g 20.0, 20',
         'required'  => 'The :attribute field is required',
         'minLength' => 'The :attribute field must be a minimum of :policy characters',
         'maxLength' => 'The :attribute field must be a maximum of :policy characters',

@@ -14,7 +14,8 @@ $(document).ready(function () {
                 $('#desc_name').text(prod_name);
 
             }else{
-                $('#desc_name').text(prod_name+' - GHS '+prod_price);
+
+                $('#desc_name').text(prod_name+' - '+ formatter.format(prod_price));
 
             }
 
@@ -31,6 +32,16 @@ $(document).ready(function () {
 
         // alert(id);
         // console.log(e.target.getAttribute('data-slider-id'))
+    });
+
+// Create our number formatter.
+    var formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'GHS',
+
+        // These options are needed to round to whole numbers if that's what you want.
+        //minimumFractionDigits: 0,
+        //maximumFractionDigits: 0,
     });
 
 

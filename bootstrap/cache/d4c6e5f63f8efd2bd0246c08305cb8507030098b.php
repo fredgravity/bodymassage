@@ -22,7 +22,7 @@
         <div class="title-bar admin-title-bar">
             <div class="title-bar-left">
                 <button class="menu-icon hide-for-large" type="button" data-open="offCanvas"></button>
-                <span class="title-bar-title"> <a href="/"><?php echo e(getenv('APP_NAME')); ?></a> </span>
+                <span class="title-bar-title"> <a href="/"><i class="fa fa-arrow-circle-left"> </i> <?php echo e(getenv('APP_NAME')); ?></a> </span>
             </div>
         </div>
 

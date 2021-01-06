@@ -5,7 +5,7 @@
 
 @section('content')
 
-    <div class="auth-login " id="auth-login">
+    <div class="auth-reset-password " id="auth-reset-password">
 
         {{--DISPLAY SPINNER CUBE IF VUE JS LOADING IS TRUE--}}
         {{--<div class="text-center loading-spinner">--}}
@@ -24,30 +24,23 @@
 
                 <div class="cell small-12 medium-7 ">
 
-                    <h2 class="text-center">Login</h2>
+                    <h2 class="text-center">Reset Your Password</h2>
 
                     {{--INCLUDE THE MESSAGE FOR ERROR DISPLAY--}}
                     @include('includes.messages')
 
-                    {{--LOGIN FORM--}}
-                    <form action="/login" method="post" id="login-form">
+                    {{--RESET PASSWORD FORM--}}
+                    <form action="/reset_password" method="post" id="reset_password-form">
 
-                        <input type="text" name="username" placeholder="username or email" value="{{ \App\classes\Request::oldData('post', 'username') }}">
-
-                        <input type="password" name="password" placeholder="password">
-
-                        <label for="remember">
-                            <input type="checkbox" name="remember_me" id="remember" value=""> Remember Me
-                        </label>
+                        <input type="email" name="email" placeholder="Enter your Email Address for Password Reset" value="">
 
                         <input type="hidden" name="token" value="{{ \App\Classes\CSRFToken::generate() }}">
 
-                        {{--<button class="button hollow float-right " id="login-btn">Login  @include('includes.spinner')</button>--}}
-                        <input type="submit" class="button hollow float-right ">
+                        <button class="button hollow float-right " id="reset-password-btn">Reset Password  @include('includes.spinner')</button>
+                        <input type="submit" class="button hollow float-right " value="Reset Password">
                     </form>
 
-                    <p>Don't have an Account? <a href="/register"> Register Here </a> OR <span><a href="/reset_password">Reset Password</a></span></p>
-                    {{--END LOGIN FORM--}}
+                    {{--END RESET PASSWORD FORM--}}
                 </div>
 
             </div>

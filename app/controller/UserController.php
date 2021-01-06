@@ -10,6 +10,7 @@ namespace App\Controller;
 
 
 use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\Payment;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use App\Classes\Redirect;
@@ -24,7 +25,7 @@ class UserController extends BaseController
 {
 
 
-    public $orders, $payments, $user, $imagePath;
+    public $orders, $payments, $order_details, $user, $imagePath;
 
     public function __construct()
     {
@@ -39,6 +40,8 @@ class UserController extends BaseController
 //        $pay = Payment::where('user_id', user()->id)->sum('amount');
         $this->payments = Payment::where('user_id', user()->id)->sum('amount');
         $this->user = User::where('id', user()->id)->first();
+        $this->order_details = OrderDetail::where('user_id', \user()->id)->with(['product'])->orderBy('id', 'DESC')->limit(5)->get();
+
 
     }
 
@@ -46,8 +49,9 @@ class UserController extends BaseController
     public function userDashboard(){
         $orders = $this->orders;
         $payments = $this->payments;
+        $order_details = $this->order_details;
 
-        return view('user/dashboard', compact('orders', 'payments'));
+        return view('user/dashboard', compact('orders', 'payments', 'order_details'));
     }
 
 
@@ -55,14 +59,19 @@ class UserController extends BaseController
         $revenue = Capsule::table('payments')->where('user_id', \user()->id)->select(
             Capsule::raw('sum(amount) as `amount` '),
             Capsule::raw("DATE_FORMAT(created_at, '%m-%Y') new_date"),
-            Capsule::raw('YEAR(created_at) year, Month(created_at) month')
+            Capsule::raw('YEAR(created_at) year, Month(created_at) month'),
+            Capsule::raw("DATE_FORMAT(created_at, '%M') month_name")
         )->groupby('year', 'month')->get();
 
         $orders = Capsule::table('orders')->where('user_id', \user()->id)->select(
             Capsule::raw('count(id) as `count` '),
             Capsule::raw("DATE_FORMAT(created_at, '%m-%Y') new_date"),
-            Capsule::raw('YEAR(created_at) year, Month(created_at) month')
+            Capsule::raw("YEAR(created_at) year, Month(created_at) month"),
+            Capsule::raw("DATE_FORMAT(created_at, '%M') month_name")
         )->groupby('year', 'month')->get();
+
+//        yearly orders
+
 
         echo json_encode(
             [
@@ -261,7 +270,7 @@ class UserController extends BaseController
 
 
         }
-
+        return false;
     }
 
 

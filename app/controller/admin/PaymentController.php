@@ -17,7 +17,7 @@ use App\Classes\Redirect;
 class PaymentController
 {
 
-    private $payments, $paymentsLink, $tableName='payments';
+    private $payments, $paymentsLink,$total, $tableName='payments', $recordNum=5;
 
     public function __construct()
     {
@@ -28,14 +28,12 @@ class PaymentController
 
         $this->payments = Payment::with('user')->get();
 
-        $total = count($this->payments);
-        list($this->payments, $this->paymentsLink) = paginatePayments(10, $total, $this->tableName, new Payment());
-
-
+        $this->total = count($this->payments);
     }
 
 
     public function showPayments(){
+        list($this->payments, $this->paymentsLink) = myPaginator($this->recordNum, $this->total, $this->tableName,new Payment());
         $revenues = Capsule::table('payments')->selectRaw('sum(amount) as `amount`')->where('status','completed')->get();
         $revenue = $revenues[0]->amount;
         $payments = $this->payments;
@@ -43,6 +41,34 @@ class PaymentController
 
         return view('/admin/payment/index', compact('revenue', 'payments', 'links'));
     }
+
+
+    public function showIndexNext($params){
+//        pnd($params);
+        $urlString = $_SERVER['REQUEST_URI'];
+        $pageId = $params['id'];
+        $role = '';
+        if (strpos($urlString, 'users')){
+            $role = 'user';
+        }elseif (strpos($urlString, 'workers')){
+            $role = 'worker';
+        }
+//pnd($role);
+        $this->nextPageUsers($role, $pageId);
+
+    }
+
+
+    public function nextPageUsers($role, $pageId){
+        list($this->payments, $this->paymentsLink)= myPaginatorNext($this->recordNum, $this->total, $this->tableName, new Payment(), $role, $pageId);
+        $revenues = Capsule::table('payments')->selectRaw('sum(amount) as `amount`')->where('status','completed')->get();
+        $revenue = $revenues[0]->amount;
+        $payments = $this->payments;
+        $links = $this->paymentsLink;
+
+        return view('/admin/payment/index', compact('revenue', 'payments', 'links'));
+    }
+
 
     public function showGraph(){
 

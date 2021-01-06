@@ -134,7 +134,7 @@ function recaptcha($captcha){
     $responseKeys = json_decode($response,true);
     header('Content-type: application/json');
 
-    pnd($responseKeys);
+//    pnd($responseKeys);
 
     if($responseKeys["success"] && $responseKeys['score'] >= 0.5) {
 //        return true;
@@ -210,21 +210,52 @@ function paginatePayments($recordsNum, $totalRecords, $tableName, $obj){
     //SET THE TOTAL NUMBER OF RECORDS REQUIRED
     $pages->set_total($totalRecords);
 
-    if ($recordsNum > $totalRecords){
-        $data = Capsule::select("SELECT * FROM $tableName WHERE deleted_at is null ORDER BY created_at DESC");
-    }else{
+//    if ($recordsNum > $totalRecords){
+//        $data = Capsule::select("SELECT * FROM $tableName WHERE deleted_at is null ORDER BY created_at DESC");
+//    }else{
         $data = Capsule::select("SELECT * FROM $tableName WHERE deleted_at is null ORDER BY created_at DESC {$pages->get_limit()}");
-    }
+//    }
 
 
 
 
     //CALL THE OBJ CLASS AND PERFORM THE TRANSFORM METHOD
     $payments = $obj->transformToArray($data);
-
+//pnd($payments);
     //GET THE CATEGORIES FROM DB AND CREATE PAGE LINKS
     return [$payments, $pages->page_links()];
 }
+
+
+//MY PAGINATOR
+
+function myPaginator($recordsNum, $totalRecords, $tableName, $obj, $role=''){
+    $pages = new \App\classes\MyPaginator($recordsNum, $tableName, $role, $next='');
+
+    //CALL THE OBJ CLASS AND PERFORM THE TRANSFORM METHOD
+    $data = $pages->resultData;
+//pnd($data);
+    $transformedData = $obj->transformToArray($data);
+    $links = $pages->getResultLinks($totalRecords);
+//pnd($links);
+    //GET THE CATEGORIES FROM DB AND CREATE PAGE LINKS
+    return [$transformedData, $links];
+
+}
+
+
+function myPaginatorNext($recordsNum, $totalRecords, $tableName, $obj,$role='', $next){
+    $pages = new \App\classes\MyPaginator($recordsNum, $tableName, $role, $next);
+//    pnd($obj);
+    $data = $pages->resultData;
+//pnd($data);
+    $transformedData = $obj->transformToArray($data);
+
+    $links = $pages->getResultLinks($totalRecords);
+//    pnd($links);
+    return [$transformedData, $links];
+}
+
 
 
 function paginate($recordsNum, $totalRecords, $tableName, $obj){

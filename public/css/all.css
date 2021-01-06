@@ -8889,26 +8889,27 @@ html.is-reveal-open body {
 }
 
 .admin-nav .menu > li > a {
-  color: #f1f1f1;
-  font-size: 1.2rem;
+  color: #F0F8FF;
+  font-size: 1rem;
+  transition: 0.2s;
 }
 
 .admin-nav .menu > li > a:hover,
 .admin-nav .menu > li > a:focus,
 .admin-nav .menu > li > a:active {
   background-color: black;
-  padding-left: 2.5rem;
+  padding-left: 1.5rem;
 }
 
 .admin-nav h3 {
-  color: #f1f1f1;
+  color: #F0F8FF;
   font-size: 1.5rem;
   text-align: center;
   font-weight: 500;
 }
 
 .admin-nav p {
-  color: #f1f1f1;
+  color: #F0F8FF;
   font-size: 1rem;
 }
 
@@ -8918,16 +8919,68 @@ html.is-reveal-open body {
 
 .admin-nav .image-holder img {
   border-radius: 50%;
-  border: 3px solid #383838;
+  height: 150px !important;
+  width: 150px !important;
+  border: 5px solid #959595;
+}
+
+.title-bar-title {
+  font-size: 1rem;
+}
+
+.title-bar-title a {
+  color: #F0F8FF !important;
+  margin-left: 1rem;
+  transition: 0.2s;
+}
+
+.title-bar-title a:hover {
+  margin-left: 0;
 }
 
 .admin-title-bar {
-  background-color: #151515;
+  background-color: #0a0a0a;
 }
 
-.admin-title-bar .title-bar .title-bar-title {
-  font-size: 1.5rem;
-  color: #f1f1f1;
+.card-divider {
+  background-color: #0a0a0a;
+}
+
+.card-divider .summary-divider a {
+  color: #F0F8FF;
+}
+
+.summary {
+  margin-top: 1rem;
+}
+
+.summary .card-section {
+  background-color: #569ff7;
+}
+
+.summary .card-section .icons {
+  font-size: 5rem;
+  color: aliceblue;
+}
+
+.summary .summary-text {
+  text-align: right;
+  color: #F0F8FF;
+}
+
+.user-logout {
+  background-color: #0a0a0a !important;
+}
+
+.user-logout a {
+  font-weight: bold;
+  transition: 0.2s;
+  color: #F0F8FF;
+  margin-right: 1rem;
+}
+
+.user-logout a:hover {
+  margin-right: 0;
 }
 
 .navigation {
@@ -9013,7 +9066,7 @@ body {
 
 .notify {
   display: none;
-  background-color: #1585f1;
+  background-color: #569ff7;
   color: #ffffff;
   position: fixed;
   right: 1rem;
@@ -9173,6 +9226,10 @@ span .fa-edit {
 #cert-box {
   max-width: 400px;
   height: auto;
+}
+
+.paginate-links li a {
+  color: #F0F8FF;
 }
 
 .home {

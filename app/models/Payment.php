@@ -8,6 +8,8 @@
 
 namespace App\Models;
 
+use App\Classes\Redirect;
+use App\Classes\Session;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
@@ -25,35 +27,49 @@ class Payment extends Model
         return $this->belongsTo(User::class);
     }
 
+//    public function orderDetail(){
+//        return $this->belongsTo(OrderDetail::class);
+//    }
+
 
     public function transformToArray($data){
         $payments = []; //SET UP CATEGORIES ARRAY
 
+
         foreach ($data as $field){
 
-            //CARBON FORMAT DATE FROM DB PROPERLY
-            $added = new Carbon($field->created_at);
-            $updated = new Carbon($field->updated_at);
+            if ($field->created_at == null || $field->updated_at == null){
+                if (getenv('APP_ENV') == 'local'){
+                    pnd('Payment model transform error');
+                }else{
+                    Session::flash('error', 'Could not transform payment data');
+                    Redirect::to($_SERVER['REQUEST_URI']);
+                }
+            }else{
+                //CARBON FORMAT DATE FROM DB PROPERLY
+                $newAdded = Carbon::createFromFormat('Y-m-d H:i:s', $field->created_at)->format('d-m-Y');
+                $newUpdated = Carbon::createFromFormat('Y-m-d H:i:s', $field->updated_at)->format('d-m-Y');
 
-            array_push($payments, [
-                'id'           => $field->id,
-                'user_id'     => $field->user_id,
-                'amount'     => $field->amount,
-                'status'     => $field->status,
-                'order_number'     => $field->order_number,
-//                'fullname'     => $field->user->fullname,
-//                'email'        => $field->user->email,
-//                'phone'        => $field->user->phone,
-//                'region'       => $field->user->region,
-//                'city'         => $field->user->city,
-//                'address'      => $field->user->address,
-//                'role'      => $field->user->role,
-//                'image'        => $field->user->image_path,
-                'added'        => $added->toFormattedDateString(),
-                'updated'      => $updated->toFormattedDateString()
-            ]);
+//            $added = new Carbon($field->created_at);
+//            $updated = new Carbon($field->updated_at);
+
+                array_push($payments, [
+                    'id'           => $field->id,
+                    'user_id'     => $field->user_id,
+                    'amount'     => $field->amount,
+                    'status'     => $field->status,
+                    'order_number'     => $field->order_number,
+////                'fullname'     => $field->user->fullname,
+                    'added'        => $newAdded,
+                    'updated'      => $newUpdated
+                ]);
+
+            }
+
+
         }
         return $payments;
+
     }
 }
 ?>
